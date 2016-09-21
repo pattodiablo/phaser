@@ -1,21 +1,117 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Demo Phaser</title>
-</head>
-<script src="phaser.js"></script>
-<script>
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload });
+    <head>
+        <meta charset="UTF-8" />
+        <title>hello phaser!</title>
+        <script src="lib/phaser.2.5.0.min.js"></script>
+      
+    </head>
+    <body>
 
+    <script type="text/javascript">
 
-function preload() {
+  
+      
+       
+      
+    var mainState = {     
 
+        preload: function  () {
+          var logo;
+          var cuadrado;
+		  var cuadradoSprite;
+		  var velocidad;
+		  var friccion;
+		  var maxAngular;
+		  
+		  
+		   game.load.image('auto', 'assets/car_black.png');
+  	       game.stage.backgroundColor = "#4488AA";
+        },
 
-}
-</script>
+ 	 create: function  () {
+		 friccion=0.98;   
+		 angularFriccion=0.5;   
+		 velocidad=0;
+		 maxAngular=200;	  
+		  
+		 automovil = game.add.sprite(220, 900, 'auto');
+		 automovil.angle=270;
+		 automovil.scale.setTo(0.3);
+		 automovil.anchor.setTo(0.5, 0.3);
+ 
+		 game.physics.enable(automovil, Phaser.Physics.ARCADE);
+ 		 cursors = game.input.keyboard.createCursorKeys();
+     
+        },
 
-<body>
-	this is phaser v2
-</body>
+        update: function (){
+			
+			
+			if(velocidad>=400){
+				velocidad=400;
+				}
+			if(velocidad<=-400){
+				velocidad=-4000;
+
+				
+				}
+				
+			if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
+				{
+					automovil.body.angularVelocity-=120;
+					if(automovil.body.angularVelocity<=-maxAngular){
+						automovil.body.angularVelocity=-maxAngular;
+						}
+					
+				}
+				else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
+				{
+					automovil.body.angularVelocity+=120;
+					if(automovil.body.angularVelocity>=maxAngular){
+						automovil.body.angularVelocity=maxAngular;
+						}
+				
+				}
+			
+			if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
+			{	
+				velocidad+=3;
+								
+				
+			}else if(game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
+				
+				velocidad-=3;
+			}
+			else{
+				velocidad*=friccion;			
+				}
+			
+				
+				automovil.body.angularVelocity*=angularFriccion;	
+				game.physics.arcade.velocityFromAngle(automovil.angle, velocidad, automovil.body.velocity);
+				},
+		
+			   
+		render:function(){
+			//game.debug.inputInfo(32, 32);
+			game.debug.spriteInfo(automovil, 32, 32);
+	        game.debug.text('Velocidad: ' + automovil.body.velocity, 32, 150);
+			game.debug.text('angularVelocity: ' + automovil.body.angularVelocity, 32, 200);
+			game.debug.text('angularAcceleration: ' + automovil.body.angularAcceleration, 32, 232);
+			game.debug.text('angularDrag: ' + automovil.body.angularDrag, 32, 264);
+			game.debug.text('deltaZ: ' + automovil.body.deltaZ(), 32, 296);
+		//	game.debug.pointer( game.input.activePointer );
+			},
+     
+};
+
+   
+
+var game = new Phaser.Game(540, 960, Phaser.AUTO);  
+game.state.add('main', mainState);  
+game.state.start('main');
+    </script>
+
+    </body>
 </html>
