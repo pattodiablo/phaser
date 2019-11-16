@@ -2,8 +2,9 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>hello phaser!</title>
+        <title>ZombieAttack</title>
         <script src="lib/phaser.2.5.0.min.js"></script>
+<<<<<<< HEAD
       
     </head>
     <body>
@@ -108,12 +109,44 @@
 			},
      
 };
+=======
+        <script src="lib/NoSleep.js"></script>
+        <script src="lib/ZombieAttack.js"></script>
+        <script src="lib/PantallaInicio.js"></script>
+        <script src="lib/Bullet.js"></script>
+        <script src="lib/Zombie.js"></script>
+
+    </head>
+
+     <style type="text/css">
+        
+        body{
+
+            padding: 0px;
+            margin: 0px;
+            background-color: #5D5D5D;
+        }
+    </style>
+    <body>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('deviceready', function() 
+            console.log("Cordova is initialized and ready!");
+        }, false);
+    </script>
+>>>>>>> origin/master
 
    
 
-var game = new Phaser.Game(540, 960, Phaser.AUTO);  
-game.state.add('main', mainState);  
-game.state.start('main');
+    <script type="text/javascript">
+     
+	//var game = new Phaser.Game(window.screen.availWidth , window.screen.availHeight , Phaser.CANVAS);
+	var noSleep = new NoSleep();
+	    noSleep.enable();
+	var game = new Phaser.Game(1920,1080, Phaser.CANVAS);
+	game.state.add('Inicio', PantallaInicio);
+    game.state.add('ZombieAttack', ZombieAttack);
+	game.state.start('Inicio');
     </script>
 
     </body>
