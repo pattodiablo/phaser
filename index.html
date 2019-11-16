@@ -9,21 +9,23 @@
     <body>
 
     <script type="text/javascript">
-
-  
       
-       
+     var carro = function (game,key){
+
+        Phaser.Sprite.call(this, game, 0, 0, key);
+        var velocidad;
+		var friccion;
+		var maxAngular;
+		
+     };
       
     var mainState = {     
 
         preload: function  () {
-          var logo;
-          var cuadrado;
-		  var cuadradoSprite;
+        
 		  var velocidad;
 		  var friccion;
 		  var maxAngular;
-		  
 		  
 		   game.load.image('auto', 'assets/car_black.png');
   	       game.stage.backgroundColor = "#4488AA";
@@ -32,13 +34,14 @@
  	 create: function  () {
 		 friccion=0.98;   
 		 angularFriccion=0.5;   
-		 velocidad=0;
+		 velocidad=270;
 		 maxAngular=200;	  
 		  
 		 automovil = game.add.sprite(220, 900, 'auto');
-		 automovil.angle=270;
-		 automovil.scale.setTo(0.3);
+		 automovil.angle=0;
+		 automovil.scale.setTo(0.5);
 		 automovil.anchor.setTo(0.5, 0.3);
+
  
 		 game.physics.enable(automovil, Phaser.Physics.ARCADE);
  		 cursors = game.input.keyboard.createCursorKeys();
@@ -46,7 +49,7 @@
         },
 
         update: function (){
-			
+			game.camera.focusOnXY(automovil.x,automovil.y);
 			
 			if(velocidad>=400){
 				velocidad=400;
@@ -89,7 +92,7 @@
 			
 				
 				automovil.body.angularVelocity*=angularFriccion;	
-				game.physics.arcade.velocityFromAngle(automovil.angle, velocidad, automovil.body.velocity);
+				game.physics.arcade.velocityFromAngle(automovil.angle+270, velocidad, automovil.body.velocity);
 				},
 		
 			   
